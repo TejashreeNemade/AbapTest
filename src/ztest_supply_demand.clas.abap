@@ -36,15 +36,16 @@ CLASS ztest_supply_demand DEFINITION
         req_date          TYPE c LENGTH 10,  " Required Date of Product
         req_quantity      TYPE menge_d,      " Required quantity
         status            TYPE string,       " Demand supply Status
-        can_delivered_qty TYPE menge_d,      " Quantity can be delivered
-        pavail_dat        TYPE c LENGTH 10,  " Available Date
+        delivered_qty     TYPE menge_d,      " Quantity can be delivered
+        Delivery_dat      TYPE c LENGTH 10,  " Delivery Date
         undelivered_qty   TYPE menge_d,
       END OF gty_output,
 
       gtty_output type STANDARD TABLE OF gty_output WITH NON-UNIQUE KEY product_id.
 
     " Internal table
-    DATA : gt_supply TYPE STANDARD TABLE OF gty_supply_tab,
+    DATA : gt_supply1 TYPE STANDARD TABLE OF gty_supply_tab,
+           gt_supply TYPE STANDARD TABLE OF gty_supply_tab,
            gt_demand TYPE STANDARD TABLE OF gty_demand_tab.
     " Methods
     METHODS add_Process_data RETURNING VALUE(rt_output) type gtty_output.
@@ -61,7 +62,7 @@ ENDMETHOD.
 method add_process_data.
 
 " Add data to internal table for Supply
-gt_supply = VALUE #(
+gt_supply1 = VALUE #(
                     ( product_id    =   '1602'  prod_desc   =   'Castle'        pavail_dat  =   '2024-05-18'    prod_quantity   =   '1200' )
                     ( product_id    =   '2081'  prod_desc   =   'Pirate Ship'   pavail_dat  =   '2024-05-17'    prod_quantity   =   '400'  )
                     ( product_id    =   '2081'  prod_desc   =   'Pirate Ship'   pavail_dat  =   '2024-05-23'    prod_quantity   =   '400'  )
@@ -76,6 +77,10 @@ gt_supply = VALUE #(
                     ( product_id    =   '9112'  prod_desc   =   'Roses'         pavail_dat  =   '2024-05-16'    prod_quantity   =   '950'  )
                     ( product_id    =   '9112'  prod_desc   =   'Roses'         pavail_dat  =   '2024-05-21'    prod_quantity   =   '670'  )
                     ).
+  " Iteration will add quantities of same Product_id and Available Date
+  LOOP AT gt_supply1 INTO DATA(lwa_supply).
+   COLLECT lwa_supply INTO gt_supply.
+  ENDLOOP.
 sort gt_supply ASCENDING by product_id.
 
 " Add data to Internal table for Demand
@@ -111,7 +116,7 @@ LOOP AT gt_demand INTO DATA(lwa_demand).
       <lfs_output>-vip_indicator = lwa_demand-vip_indicator.
       <lfs_output>-req_date = lwa_demand-req_date.
       <lfs_output>-req_quantity = lwa_demand-req_quantity.
-      <lfs_output>-status = 'UNFULLFILED'.
+      <lfs_output>-status = 'UNFULFILLED'.
 
       LOOP AT gt_supply ASSIGNING FIELD-SYMBOL(<lfs_supply>) WHERE product_id = lwa_demand-product_id AND
                                                     pavail_dat LE lwa_demand-req_date.
@@ -122,17 +127,17 @@ LOOP AT gt_demand INTO DATA(lwa_demand).
           <lfs_supply>-prod_quantity = <lfs_supply>-prod_quantity - lwa_demand-req_quantity.
 
           " Update output table
-          <lfs_output>-status = 'DEMAND FULLFILED'.
-          <lfs_output>-can_delivered_qty = lwa_demand-req_quantity.
-          <lfs_output>-pavail_dat = <lfs_supply>-pavail_dat.
+          <lfs_output>-status = 'DEMAND FULFILLED'.
+          <lfs_output>-delivered_qty = lwa_demand-req_quantity.
+          <lfs_output>-delivery_dat = <lfs_supply>-pavail_dat.
           <lfs_output>-undelivered_qty = 0.
         ELSE.
           " Partially Demand Fullfiled
 
           " Update output table
-          <lfs_output>-status = 'PARTIALLY DEMAND FULLFILED'.
-          <lfs_output>-can_delivered_qty = <lfs_supply>-prod_quantity.
-          <lfs_output>-pavail_dat = <lfs_supply>-pavail_dat.
+          <lfs_output>-status = 'DEMAND PARTIALLY FULFILLED'.
+          <lfs_output>-delivered_qty = <lfs_supply>-prod_quantity.
+          <lfs_output>-delivery_dat = <lfs_supply>-pavail_dat.
           <lfs_output>-undelivered_qty = lwa_demand-req_quantity - <lfs_supply>-prod_quantity.
 
         ENDIF.
@@ -140,5 +145,6 @@ LOOP AT gt_demand INTO DATA(lwa_demand).
       ENDLOOP.
     ENDLOOP.
 
+   SORT rt_output BY product_id ASCENDING.
 ENDMETHOD.
 ENDCLASS.
