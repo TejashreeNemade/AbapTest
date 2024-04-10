@@ -30,6 +30,7 @@ CLASS ztest_supply_demand DEFINITION
           " Output table
       BEGIN OF gty_output,
         product_id        TYPE matnr,        " Product ID
+        prod_name         TYPE string,       " Product Description
         cust_id           TYPE c LENGTH 10,  " Customer ID
         cust_name         TYPE name1_gp,     " Customer Name
         vip_indicator     TYPE c LENGTH 1,   " VIP Customer Indicator
@@ -117,6 +118,12 @@ LOOP AT gt_demand INTO DATA(lwa_demand).
       <lfs_output>-req_date = lwa_demand-req_date.
       <lfs_output>-req_quantity = lwa_demand-req_quantity.
       <lfs_output>-status = 'UNFULFILLED'.
+
+      " Read Product name from Supply data table
+      Read table gt_supply ASSIGNING FIELD-SYMBOL(<lfs_supplydata>) WITH KEY product_id = lwa_demand-product_id.
+      if sy-subrc = 0 and <lfs_supplydata> is ASSIGNED.
+        <lfs_output>-prod_name = <lfs_supplydata>-prod_desc.
+      endif.
 
       LOOP AT gt_supply ASSIGNING FIELD-SYMBOL(<lfs_supply>) WHERE product_id = lwa_demand-product_id AND
                                                     pavail_dat LE lwa_demand-req_date.
