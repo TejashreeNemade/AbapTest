@@ -18,6 +18,7 @@ Class Name : ztest_supply_demand
     Output report is displayed with below fields:
    
     PRODUCT_ID (Product ID)
+    PROD_NAME  (Product Name)
     CUST_ID   (Customer ID)
     CUST_NAME (Customer Name)
     VIP_INDICATOR (Customer VIP Status)
@@ -56,26 +57,29 @@ If Product is not available on the required date, Status in Output table is set 
 
 Below is the screenshot of output from Eclipse.
 
-![Output_supply_demand](https://github.com/TejashreeNemade/AbapTest/assets/166565717/17614c7d-1ac0-4d9d-b518-b7b291d84b86)
+![Output_supply_demand](https://github.com/TejashreeNemade/AbapTest/assets/166565717/a0df82b6-a0d2-4cca-8dd9-501c64ea4946)
+
 
 
 **Output in table format:**
 
-PRODUCT_ID    CUST_ID    CUST_NAME     VIP_INDICATOR    REQ_DATE      REQ_QUANTITY    STATUS                        DELIVERED_QTY    DELIVERY_DAT    UNDELIVERED_QTY
-1602          92043      Walmart       X                2024-05-21    640.0           DEMAND FULFILLED              640.0            2024-05-18      0.0            
-2081          93011      Hobby Town    X                2024-05-19    650.0           DEMAND PARTIALLY FULFILLED    400.0            2024-05-17      250.0          
-4382          92043      Walmart       X                2024-05-14    2200.0          DEMAND FULFILLED              2200.0           2024-05-12      0.0            
-5906          93011      Hobby Town    X                2024-05-21    350.0           DEMAND FULFILLED              350.0            2024-05-18      0.0            
-5906          92043      Walmart       X                2024-05-24    620.0           DEMAND FULFILLED              620.0            2024-05-18      0.0            
-7851          93011      Hobby Town    X                2024-05-09    580.0           DEMAND PARTIALLY FULFILLED    335.0            2024-05-08      245.0          
-8359          92043      Walmart       X                2024-05-05    130.0           UNFULFILLED                   0.0                              0.0            
-9112          92043      Walmart       X                2024-05-01    1000.0          UNFULFILLED                   0.0                              0.0            
-9112          93011      Hobby Town    X                2024-05-13    500.0           DEMAND FULFILLED              500.0            2024-05-09      0.0            
-1602          91389      Toys’R’Us                      2024-05-20    480.0           DEMAND FULFILLED              480.0            2024-05-18      0.0            
-3000          94211      Target                         2024-05-02    780.0           UNFULFILLED                   0.0                              0.0            
-4382          91389      Toys’R’Us                      2024-05-14    5000.0          DEMAND FULFILLED              5000.0           2024-05-12      0.0            
-5906          94211      Target                         2024-05-20    1500.0          DEMAND PARTIALLY FULFILLED    780.0            2024-05-18      720.0          
-6353          91389      Toys’R’Us                      2024-05-19    440.0           DEMAND PARTIALLY FULFILLED    250.0            2024-05-19      190.0          
-8359          91389      Toys’R’Us                      2024-05-03    410.0           UNFULFILLED                   0.0                              0.0            
-9112          91389      Toys’R’Us                      2024-05-11    500.0           DEMAND FULFILLED              500.0            2024-05-09      0.0            
-9112          94211      Target                         2024-05-18    500.0           DEMAND FULFILLED              500.0            2024-05-16      0.0            
+PRODUCT_ID    PROD_NAME      CUST_ID    CUST_NAME     VIP_INDICATOR    REQ_DATE      REQ_QUANTITY    STATUS                        DELIVERED_QTY    DELIVERY_DAT    UNDELIVERED_QTY
+1602          Castle         92043      Walmart       X                2024-05-21    640.0           DEMAND FULFILLED              640.0            2024-05-18      0.0            
+1602          Castle         91389      Toys’R’Us                      2024-05-20    480.0           DEMAND FULFILLED              480.0            2024-05-18      0.0            
+2081          Pirate Ship    93011      Hobby Town    X                2024-05-19    650.0           DEMAND PARTIALLY FULFILLED    400.0            2024-05-17      250.0          
+3000          Car            94211      Target                         2024-05-02    780.0           UNFULFILLED                   0.0                              0.0            
+4382          Spaceship      92043      Walmart       X                2024-05-14    2200.0          DEMAND FULFILLED              2200.0           2024-05-12      0.0            
+4382          Spaceship      91389      Toys’R’Us                      2024-05-14    5000.0          DEMAND FULFILLED              5000.0           2024-05-12      0.0            
+5906          Train          93011      Hobby Town    X                2024-05-21    350.0           DEMAND FULFILLED              350.0            2024-05-18      0.0            
+5906          Train          92043      Walmart       X                2024-05-24    620.0           DEMAND FULFILLED              620.0            2024-05-18      0.0            
+5906          Train          94211      Target                         2024-05-20    1500.0          DEMAND PARTIALLY FULFILLED    780.0            2024-05-18      720.0          
+6353          Firestation    91389      Toys’R’Us                      2024-05-19    440.0           DEMAND FULFILLED              440.0            2024-05-19      0.0            
+7851          Bulldozer      93011      Hobby Town    X                2024-05-09    580.0           DEMAND PARTIALLY FULFILLED    335.0            2024-05-08      245.0          
+8359                         92043      Walmart       X                2024-05-05    130.0           UNFULFILLED                   0.0                              0.0            
+8359                         91389      Toys’R’Us                      2024-05-03    410.0           UNFULFILLED                   0.0                              0.0            
+9112          Roses          92043      Walmart       X                2024-05-01    1000.0          UNFULFILLED                   0.0                              0.0            
+9112          Roses          93011      Hobby Town    X                2024-05-13    500.0           DEMAND FULFILLED              500.0            2024-05-09      0.0            
+9112          Roses          91389      Toys’R’Us                      2024-05-11    500.0           DEMAND FULFILLED              500.0            2024-05-09      0.0            
+9112          Roses          94211      Target                         2024-05-18    500.0           DEMAND FULFILLED              500.0            2024-05-16      0.0            
+
+         
